@@ -1,17 +1,18 @@
-﻿#Neptus-MOOS plug-in
+﻿#Neptus Plug-in skeleton
 ----
 ##Description
-This Neptus package provides some utilities to make interaction with MOOS systems easier.
+This project can be forked in other to create Neptus-based plug-ins
 
-###MoosInteraction
-This plug-in allows displaying of coordinates as North/East offsets relative to the mission home reference. Used for creating MOOS-IVP Waypoint behaviors.
+###Requirements
+* Java Development Kit (JDK) 8
+* Neptus
+* Apache ANT  
 
-###MoosConnection
-This plug-in adds a menu Advanced>MOOS that allows connecting to a MOOSDB and monitor its data. Moreover it allows sending of data to the same MOOSDB.
+###Development Guide
+* Compile / Install Neptus in your machine.
+* Edit the file named **plugin.properties** with the settings for your plug-in.
+* Optionally generate an eclipse project by issuing the command:
+   * `sh ant GenerateEclipseProject`
+* After creating your plug-in you can deploy it to Neptus using the *deploy* ant target:
+   * `sh ant deploy`
 
-###License
-This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as  published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version. 
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. 
-
-You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA. 
