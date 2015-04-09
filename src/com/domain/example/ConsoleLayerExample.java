@@ -3,6 +3,7 @@ package com.domain.example;
 import pt.lsts.neptus.console.ConsoleLayer;
 import pt.lsts.neptus.loader.NeptusMain;
 import pt.lsts.neptus.plugins.PluginDescription;
+import pt.lsts.neptus.plugins.PluginsRepository;
 
 @PluginDescription(name="Example Console Layer")
 public class ConsoleLayerExample extends ConsoleLayer {
@@ -25,7 +26,11 @@ public class ConsoleLayerExample extends ConsoleLayer {
 		return false;
 	}
 	
+	// How to test your plug-ins in debug mode.
+	// If running inside Eclipse, set the "Working directory" as the Neptus directory.
 	public static void main(String[] args) {
+		PluginsRepository.addPlugin(ConsoleLayerExample.class.getName());
+		PluginsRepository.addPlugin(ConsolePanelExample.class.getName());
 		NeptusMain.main(args);
 	}
 }
