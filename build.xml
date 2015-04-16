@@ -13,8 +13,15 @@
 		</fileset>
 	</path>
 	
+	<path id="plugin.libs">
+	    <path refid="neptus.libs"/>
+		<fileset dir="./lib" casesensitive="false">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+	
 	<path id="neptus.run">
-		<path refid="neptus.libs"/>
+		<path refid="plugin.libs"/>
 		<fileset dir="${NeptusDir}/plugins" casesensitive="false">
 			<include name="**/*.jar"/>
 			<include name="**/*.zip" />
@@ -24,7 +31,7 @@
 	<target name="compile">
 		<delete dir="build"/>
 		<mkdir dir="build"/>
-		<javac classpathref="neptus.libs" 
+		<javac classpathref="plugin.libs" 
 			srcdir="${PluginSources}" 
 			destdir="build" 
 			includes="**/*.java"
@@ -53,12 +60,17 @@
 	
 	<target name="deploy" depends="jar">
 		<description>Generate jar and deploy it to the Neptus plugins dir.</description>
-		<copy tofile="${NeptusDir}/plugins/${JarFileName}" file="${JarFileName}"/>
+		<copy tofile="${NeptusDir}/plugins/${PluginName}.jar" file="${PluginName}.jar"/>
+		<copy toDir="${NeptusDir}/lib">
+		    <fileset dir="./lib">
+		        <include name="**/*.jar"/>
+		    </fileset>	    
+		</copy>
 	</target>
 	
 	<target name="undeploy">
 		<description>Remove previously deployed jar from Neptus plugins dir.</description>
-		<delete file="${NeptusDir}/plugins/${JarFileName}"/>
+		<delete file="${NeptusDir}/plugins/${PluginName}.jar"/>
 	</target>
 
 	<target name="clean">
@@ -108,7 +120,17 @@
 			out.write('	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>\n');
 			out.write('	<classpathentry kind="lib" path="'+neptusSrc+'/bin/neptus.jar"/>\n');
 			
+			// Reference jars inside ./lib dir
 			var libDirs = [new File(neptusSrc+'/lib')];
+			if (new File('./lib').exists()) {
+				libDirs.push(new File('./lib'));
+				tmp = new File('./lib').listFiles();
+				for (f in tmp) {
+					if (tmp[f].isDirectory())
+						libDirs.push(tmp[f]);
+				}
+			}
+			
 			var tmp = new File(neptusSrc+'/lib').listFiles();
 			
 			for (f in tmp) {
